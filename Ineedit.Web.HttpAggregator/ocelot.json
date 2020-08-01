@@ -1,0 +1,128 @@
+{
+  "Routes": [
+    //Ad routes
+    {
+      "DownstreamPathTemplate": "/api/v1/ad/all",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "53355"
+        }
+      ],
+      "UpstreamPathTemplate": "/ad/all",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "ads"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ad?adId={adId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "53355"
+        }
+      ],
+      "UpstreamPathTemplate": "/ad?adId={adId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "ads"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ad?adId={adId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "53355"
+        }
+      ],
+      "UpstreamPathTemplate": "/ad?adId={adId}",
+      "UpstreamHttpMethod": [ "Delete" ],
+      "SwaggerKey": "ads"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ad",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "53355"
+        }
+      ],
+      "UpstreamPathTemplate": "/ad",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "ads"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/ad",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "53355"
+        }
+      ],
+      "UpstreamPathTemplate": "/ad",
+      "UpstreamHttpMethod": [ "Put" ],
+      "SwaggerKey": "ads"
+    },
+
+    //Identity routes
+    {
+      "DownstreamPathTemplate": "/api/v1/account/authenticate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "57045"
+        }
+      ],
+      "UpstreamPathTemplate": "/account/authenticate",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "identity"
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/account/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "57045"
+        }
+      ],
+      "UpstreamPathTemplate": "/account/register",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "identity"
+    }
+  ],
+
+  "SwaggerEndPoints": [
+    {
+      "Key": "ads",
+      "Config": [
+        {
+          "Name": "Ad API",
+          "Version": "v1",
+          "Url": "http://localhost:53355/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "identity",
+      "Config": [
+        {
+          "Name": "Identity API",
+          "Version": "v1",
+          "Url": "http://localhost:57045/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "AuthenticationOptions": {
+      "AuthenticationProviderKey": "Bearer",
+      "AllowedScopes": []
+    },
+    "BaseUrl": "https://localhost:44322/"
+  }
+}

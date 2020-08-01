@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Ads.API.Application.ViewModels
+{
+    public class CreatingAdViewModel
+    {
+        public string Name { get; set; }
+
+        public int TypeId { get; set; }
+
+        public string Comment { get; set; }
+    }
+}

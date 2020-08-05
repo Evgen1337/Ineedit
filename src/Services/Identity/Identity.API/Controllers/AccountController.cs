@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Identity.API.Controllers
@@ -20,11 +23,13 @@ namespace Identity.API.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly JwtAuthOptions _jwtAuthOptions;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, IOptions<JwtAuthOptions> options, ILogger<AccountController> logger)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _jwtAuthOptions = options.Value ?? throw new ArgumentNullException(nameof(options.Value));
             _logger = logger ?? throw new ArgumentNullException(nameof(userManager));
         }
 
@@ -71,7 +76,7 @@ namespace Identity.API.Controllers
                     throw new InvalidLoginOrPassException("Invalid login or password");
 
                 var claimsIdentity = await GetClaimsIdentityAsync(user, model.Password);
-                var jwt = JwtHelper.GenerateJwt(claimsIdentity);
+                var jwt = GenerateJwt(claimsIdentity);
 
                 return Ok(new AuthenticateViewModel(user.Id, user.Email, jwt));
             }
@@ -109,6 +114,26 @@ namespace Identity.API.Controllers
             );
 
             return claimsIdentity;
+        }
+
+        private string GenerateJwt(ClaimsIdentity claimsIdentity)
+        {
+            var dateTimeNow = DateTime.UtcNow;
+            var jwt = new JwtSecurityToken(
+                    _jwtAuthOptions.Issuer,
+                    _jwtAuthOptions.Audience,
+                    claimsIdentity.Claims,
+                    dateTimeNow,
+                    dateTimeNow.Add(_jwtAuthOptions.LifeTime),
+                    new SigningCredentials(
+                        JwtAuthHelper.GetSymmetricSecurityKey(_jwtAuthOptions.Key),
+                        SecurityAlgorithms.HmacSha256
+                    )
+            );
+
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return encodedJwt;
         }
     }
 }

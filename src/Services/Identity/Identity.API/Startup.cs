@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Net.Mime;
 using System.Reflection;
 
@@ -29,10 +29,10 @@ namespace Identity.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen();
             services.AddCustomMvc();
-            services.AddCustomDbContext(Configuration);
+            services.AddSwaggerGen();
             services.AddCustomAuthentication(Configuration);
+            services.AddCustomDbContext(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -107,6 +107,21 @@ namespace Identity.API
             })
                 .AddEntityFrameworkStores<AccountContext>();
 
+            var issuer = configuration.GetSection("JwtAuth:Issuer").Value;
+            var audience = configuration.GetSection("JwtAuth:Audience").Value;
+            var key = configuration.GetSection("JwtAuth:Key").Value;
+            var lifeTime = configuration.GetSection("JwtAuth:LifeTime").Value;
+
+            services.AddOptions<JwtAuthOptions>()
+                .PostConfigure(c =>
+                {
+                    c.Issuer = issuer;
+                    c.Audience = audience;
+                    c.Key = key;
+                    c.LifeTime = TimeSpan.Parse(lifeTime);
+                })
+                .ValidateDataAnnotations();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -114,11 +129,11 @@ namespace Identity.API
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = JwtHelper.Issuer,
+                        ValidIssuer = issuer,
                         ValidateAudience = true,
-                        ValidAudience = JwtHelper.Audience,
+                        ValidAudience = audience,
                         ValidateLifetime = true,
-                        IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(),
+                        IssuerSigningKey = JwtAuthHelper.GetSymmetricSecurityKey(key),
                         ValidateIssuerSigningKey = true,
                     };
                 });

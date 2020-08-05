@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net.Mime;
 using System.Reflection;
+using System.Text;
 
 namespace Ads.API
 {
@@ -35,7 +36,7 @@ namespace Ads.API
         {
             services.AddCustomMvc();
             services.AddCustomDbContext(Configuration);
-            services.AddCustomAuthentication();
+            services.AddCustomAuthentication(Configuration);
             services.AddSwaggerGen();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -116,8 +117,12 @@ namespace Ads.API
             return services;
         }
 
-        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services)
+        public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
+            var issuer = configuration.GetSection("JwtAuth:Issuer").Value;
+            var audience = configuration.GetSection("JwtAuth:Audience").Value;
+            var key = configuration.GetSection("JwtAuth:Key").Value;
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -125,11 +130,11 @@ namespace Ads.API
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = JwtHelper.Issuer,
+                        ValidIssuer = issuer,
                         ValidateAudience = true,
-                        ValidAudience = JwtHelper.Audience,
+                        ValidAudience = audience,
                         ValidateLifetime = true,
-                        IssuerSigningKey = JwtHelper.GetSymmetricSecurityKey(),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
                         ValidateIssuerSigningKey = true,
                     };
                 });

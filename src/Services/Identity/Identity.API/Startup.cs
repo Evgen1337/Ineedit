@@ -64,7 +64,7 @@ namespace Identity.API
             services.AddCors();
 
             services.AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AuthenticateModelValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AuthenticateDtoValidator>());
 
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>

@@ -22,7 +22,7 @@ namespace Ads.API.Application.Commands
 
         public async Task<AdViewModel> Handle(UpdateAdCommand request, CancellationToken cancellationToken)
         {
-            var ad = await _adRepository.GetByIdAsync(request.Ad.AdId);
+            var ad = await _adRepository.GetByIdAsync(request.UpdatingAdDto.AdId);
 
             if (ad is null)
                 throw new AdNotFoundException("Ad not found");
@@ -30,9 +30,9 @@ namespace Ads.API.Application.Commands
             if (request.UserId != ad.OwnerId)
                 throw new UserWithAdOwnerDoesntEqualsException("User not equals owner ad");
 
-            ad.Name = request.Ad.Name;
-            ad.AdType =  AdType.FromValue<AdType>(request.Ad.TypeId);
-            ad.Comment = request.Ad.Comment;
+            ad.Name = request.UpdatingAdDto.Name;
+            ad.AdType =  AdType.FromValue<AdType>(request.UpdatingAdDto.TypeId);
+            ad.Comment = request.UpdatingAdDto.Comment;
 
             var updatedAd = _adRepository.Update(ad);
             await _adRepository.UnitOfWork.SaveChangesAsync();

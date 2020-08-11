@@ -96,7 +96,7 @@ namespace Ads.API
                 });
 
             services.AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GettingAdViewModelValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GettingAdDtoModelValidator>());
 
             return services;
         }

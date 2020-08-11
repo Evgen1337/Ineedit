@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ads.API.Application.ViewModels
+namespace Ads.Dtos.Ad
 {
-    public class GettingAdViewModel
+    public class DeletingAdDto
     {
         public int AdId { get; set; }
     }

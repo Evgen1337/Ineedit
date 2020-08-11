@@ -1,15 +1,11 @@
-﻿using Ads.API.Application.ViewModels;
+﻿using Ads.Dtos.Ad;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ads.API.Application.Validations
 {
-    public class CreatingAdViewModelValidator : AbstractValidator<CreatingAdViewModel>
+    public class CreatingAdDtoModelValidator : AbstractValidator<CreatingAdDto>
     {
-        public CreatingAdViewModelValidator()
+        public CreatingAdDtoModelValidator()
         {
             RuleFor(m => m.Name)
                 .NotEmpty()

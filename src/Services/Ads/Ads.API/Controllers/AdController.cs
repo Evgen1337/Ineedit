@@ -3,6 +3,7 @@ using Ads.API.Application.Exceptions;
 using Ads.API.Application.Queries;
 using Ads.API.Application.ViewModels;
 using Ads.API.Infrastructure.Services;
+using Ads.Dtos.Ad;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,32 +22,12 @@ namespace Ads.API.Controllers
         private readonly IMediator _mediator;
         private readonly IIdentityService _identityService;
         private readonly IAdQueries _adQueries;
-        private readonly ILogger<AdController> _logger;
 
-        public AdController(IMediator mediator, IIdentityService identityService, IAdQueries adQueries, ILogger<AdController> logger)
+        public AdController(IMediator mediator, IIdentityService identityService, IAdQueries adQueries)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _identityService = identityService ?? throw new ArgumentNullException(nameof(mediator));
             _adQueries = adQueries ?? throw new ArgumentNullException(nameof(mediator));
-            _logger = logger ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [ProducesResponseType(typeof(AdViewModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetAdAsync([FromQuery] GettingAdViewModel gettingAdViewModel)
-        {
-            try
-            {
-                var ad = await _adQueries.GetAdAsync(gettingAdViewModel.AdId);
-
-                return Ok(ad);
-            }
-            catch (AdNotFoundException ex)
-            {
-                return NotFound(ex.ToErrorsContainer());
-            }
         }
 
         [HttpGet]
@@ -60,14 +41,32 @@ namespace Ads.API.Controllers
             return Ok(ads.ToCollectionContainer());
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(AdViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetAdAsync([FromQuery] GettingAdDto gettingAdDto)
+        {
+            try
+            {
+                var ad = await _adQueries.GetAdAsync(gettingAdDto.AdId);
+
+                return Ok(ad);
+            }
+            catch (AdNotFoundException ex)
+            {
+                return NotFound(ex.ToErrorsContainer());
+            }
+        }
+
         [HttpPut]
         [ProducesResponseType(typeof(AdViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> UpdateAdAsync([FromBody] UpdatingAdViewModel updateAdViewModel)
+        public async Task<IActionResult> UpdateAdAsync([FromBody] UpdatingAdDto updatingAdDto)
         {
             var userId = _identityService.GetUserIdentity();
-            var command = new UpdateAdCommand(updateAdViewModel, Guid.Parse(userId));
+            var command = new UpdateAdCommand(updatingAdDto, Guid.Parse(userId));
 
             try
             {
@@ -82,7 +81,7 @@ namespace Ads.API.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
@@ -91,17 +90,17 @@ namespace Ads.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(AdViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> AddAdAsync([FromBody] CreatingAdViewModel adViewModel)
+        public async Task<IActionResult> AddAdAsync([FromBody] CreatingAdDto creatingAdDto)
         {
             var userId = _identityService.GetUserIdentity();
-            var command = new CreateAdCommand(Guid.Parse(userId), adViewModel);
+            var command = new CreateAdCommand(Guid.Parse(userId), creatingAdDto);
 
             try
             {
                 var ad = await _mediator.Send(command);
                 return Ok(ad);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -111,10 +110,10 @@ namespace Ads.API.Controllers
         [ProducesResponseType(typeof(AdViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ErrorsContainer), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> DeleteAdAsync([FromQuery] DeletingAdViewModel deletingAdView)
+        public async Task<IActionResult> DeleteAdAsync([FromQuery] DeletingAdDto deletingAdDto)
         {
             var userId = _identityService.GetUserIdentity();
-            var command = new DeleteAdCommand(Guid.Parse(userId), deletingAdView.AdId);
+            var command = new DeleteAdCommand(Guid.Parse(userId), deletingAdDto.AdId);
 
             try
             {
@@ -129,7 +128,7 @@ namespace Ads.API.Controllers
             {
                 return BadRequest(ex.ToErrorsContainer());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.ToErrorsContainer());
             }

@@ -1,15 +1,8 @@
 ﻿using Ads.Domain.AggregatesModel.AdAggregate;
 using Ads.Domain.SeedWork;
 using Ads.Infrastructure.EntityConfigurations;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Ads.Infrastructure
 {

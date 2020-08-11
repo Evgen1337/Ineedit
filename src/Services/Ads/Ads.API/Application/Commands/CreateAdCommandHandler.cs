@@ -22,9 +22,9 @@ namespace Ads.API.Application.Commands
         {
             var adToInsert = new Ad(
                 command.UserId,
-                command.Ad.Name,
-                AdType.FromValue<AdType>(command.Ad.TypeId),
-                command.Ad.Comment
+                command.CreatingAdDto.Name,
+                AdType.FromValue<AdType>(command.CreatingAdDto.TypeId),
+                command.CreatingAdDto.Comment
             );
 
             var ad = await _adRepository.AddAsync(adToInsert);

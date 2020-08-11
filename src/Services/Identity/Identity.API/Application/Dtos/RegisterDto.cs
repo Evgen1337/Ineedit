@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Identity.API.Application.ViewModels
+namespace Identity.API.Application.Dtos
 {
-    public class RegisterViewModel
+    public class RegisterDto
     {
         public string Email { get; set; }
 

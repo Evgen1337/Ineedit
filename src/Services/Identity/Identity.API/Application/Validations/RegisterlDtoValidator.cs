@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Identity.API.Application.Dtos;
 using Identity.API.Application.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Identity.API.Application.Validations
 {
-    public class RegisterlModelValidator : AbstractValidator<RegisterViewModel>
+    public class RegisterlDtoValidator : AbstractValidator<RegisterDto>
     {
-        public RegisterlModelValidator()
+        public RegisterlDtoValidator()
         {
             RuleFor(m => m.Email)
                 .NotEmpty()

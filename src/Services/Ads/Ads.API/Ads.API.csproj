@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Ads.Dtos\Ads.Dtos.csproj" />
+    <ProjectReference Include="..\..\..\WebHost.Customization\WebHost.Customization.csproj" />
     <ProjectReference Include="..\Ads.Infrastructure\Ads.Infrastructure.csproj" />
   </ItemGroup>
 

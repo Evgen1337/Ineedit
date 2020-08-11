@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Identity.API.Application.Validations
 {
-    public class AuthenticateModelValidator : AbstractValidator<AuthenticateModel>
+    public class AuthenticateDtoValidator : AbstractValidator<AuthenticateModel>
     {
-        public AuthenticateModelValidator()
+        public AuthenticateDtoValidator()
         {
             RuleFor(m => m.Email)
                 .NotEmpty()

@@ -4,16 +4,14 @@ using Ads.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Ads.API.Infrastructure.Migrations
+namespace Ads.Infrastructure.Migrations
 {
     [DbContext(typeof(AdsContext))]
-    [Migration("20200729130811_Initial")]
-    partial class Initial
+    partial class AdsContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

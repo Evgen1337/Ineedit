@@ -1,22 +1,20 @@
 ﻿using Ads.API.Application.ViewModels;
+using Ads.Dtos.Ad;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ads.API.Application.Commands
 {
     public class CreateAdCommand : IRequest<AdViewModel>
     {
-        public CreateAdCommand(Guid userId, CreatingAdViewModel ad)
+        public CreateAdCommand(Guid userId, CreatingAdDto creatingAdDto)
         {
             UserId = userId;
-            Ad = ad;
+            CreatingAdDto = creatingAdDto;
         }
 
         public Guid UserId { get; }
 
-        public CreatingAdViewModel Ad { get; }
+        public CreatingAdDto CreatingAdDto { get; }
     }
 }

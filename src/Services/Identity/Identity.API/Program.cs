@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Identity.API.Infrastructure;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System;
+using System.IO;
+using WebHostBlocks.Customization;
 
 namespace Identity.API
 {
@@ -73,33 +69,6 @@ namespace Identity.API
                 .WriteTo.RollingFile(@"logs\log.log", retainedFileCountLimit: 7)
 #endif
                 .CreateLogger();
-        }
-    }
-
-    public static class IWebHostExtensions
-    {
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost host) where TContext : DbContext
-        {
-            using var scope = host.Services.CreateScope();
-
-            var services = scope.ServiceProvider;
-            var logger = services.GetRequiredService<ILogger<TContext>>();
-            var context = services.GetService<TContext>();
-
-            try
-            {
-                logger.LogInformation("Migrating database associated with context {DbContextName}", typeof(TContext).Name);
-
-                context.Database.Migrate();
-
-                logger.LogInformation("Migrated database associated with context {DbContextName}", typeof(TContext).Name);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while migrating the database used on context {DbContextName}", typeof(TContext).Name);
-            }
-
-            return host;
         }
     }
 }

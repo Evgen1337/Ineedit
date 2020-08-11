@@ -1,4 +1,6 @@
 ﻿using Ads.API.Application.ViewModels;
+using Ads.Dtos;
+using Ads.Dtos.Ad;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,13 @@ namespace Ads.API.Application.Commands
 {
     public class UpdateAdCommand : IRequest<AdViewModel>
     {
-        public UpdateAdCommand(UpdatingAdViewModel adViewModel, Guid userId)
+        public UpdateAdCommand(UpdatingAdDto updatingAdDto, Guid userId)
         {
-            Ad = adViewModel;
+            UpdatingAdDto = updatingAdDto;
             UserId = userId;
         }
 
-        public UpdatingAdViewModel Ad { get; }
+        public UpdatingAdDto UpdatingAdDto { get; }
 
         public Guid UserId { get; }
     }

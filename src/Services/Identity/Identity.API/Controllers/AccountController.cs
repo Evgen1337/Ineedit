@@ -1,10 +1,10 @@
 ﻿using Identity.API.Application;
+using Identity.API.Application.Dtos;
 using Identity.API.Application.Exceptions;
 using Identity.API.Application.ViewModels;
 using Identity.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Identity.API.Controllers
@@ -24,20 +23,18 @@ namespace Identity.API.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtAuthOptions _jwtAuthOptions;
-        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IOptions<JwtAuthOptions> options, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, IOptions<JwtAuthOptions> options)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _jwtAuthOptions = options.Value ?? throw new ArgumentNullException(nameof(options.Value));
-            _logger = logger ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         [HttpPost]
         [Route("register")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((typeof(ErrorsContainer)), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
+        public async Task<IActionResult> RegisterAsync(RegisterDto model)
         {
             var user = new ApplicationUser
             {
@@ -62,7 +59,7 @@ namespace Identity.API.Controllers
         [Route("authenticate")]
         [ProducesResponseType((typeof(AuthenticateViewModel)), (int)HttpStatusCode.OK)]
         [ProducesResponseType((typeof(ErrorsContainer)), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticateModel model)
+        public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticateDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             try

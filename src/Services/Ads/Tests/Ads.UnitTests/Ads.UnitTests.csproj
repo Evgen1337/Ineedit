@@ -14,9 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ad.Domain\Ads.Domain.csproj" />
-    <ProjectReference Include="..\Ads.API\Ads.API.csproj" />
-    <ProjectReference Include="..\Ads.Infrastructure\Ads.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Ads.Infrastructure\Ads.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

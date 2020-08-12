@@ -2,12 +2,11 @@
 using Ads.API.Application.Exceptions;
 using Ads.API.Application.Queries;
 using Ads.API.Application.ViewModels;
-using Ads.API.Infrastructure.Services;
 using Ads.Dtos.Ad;
+using IdentityLib;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Threading.Tasks;

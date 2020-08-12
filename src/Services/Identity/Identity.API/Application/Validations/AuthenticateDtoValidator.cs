@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Identity.API.Application.Dtos;
 using Identity.API.Application.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Identity.API.Application.Validations
 {
-    public class AuthenticateDtoValidator : AbstractValidator<AuthenticateModel>
+    public class AuthenticateDtoValidator : AbstractValidator<AuthenticateDto>
     {
         public AuthenticateDtoValidator()
         {

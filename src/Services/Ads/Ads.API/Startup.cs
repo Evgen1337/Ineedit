@@ -1,11 +1,10 @@
-using Ads.API.Application;
 using Ads.API.Application.Validations;
 using Ads.API.Infrastructure.AutofacModules;
-using Ads.API.Infrastructure.Services;
 using Ads.Infrastructure;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation.AspNetCore;
+using IdentityLib;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

@@ -25,7 +25,7 @@ namespace Ads.API.Controllers
         public AdController(IMediator mediator, IIdentityService identityService, IAdQueries adQueries)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(mediator));
+            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
             _adQueries = adQueries ?? throw new ArgumentNullException(nameof(mediator));
         }
 

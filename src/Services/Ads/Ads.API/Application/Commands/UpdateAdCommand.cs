@@ -1,11 +1,7 @@
 ﻿using Ads.API.Application.ViewModels;
-using Ads.Dtos;
 using Ads.Dtos.Ad;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ads.API.Application.Commands
 {

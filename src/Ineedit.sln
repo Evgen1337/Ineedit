@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Services\Id
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ineedit.Web.HttpAggregator", "ApiGateways\Ineedit.Web.HttpAggregator\Ineedit.Web.HttpAggregator.csproj", "{05E91F5A-359A-4516-BC38-48C832C04D9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ads.Dtos", "Ads.Dtos\Ads.Dtos.csproj", "{26A8CEB7-3B51-4BE8-B264-BD04839142C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ads.Dtos", "Services\Ads\Ads.Dtos\Ads.Dtos.csproj", "{26A8CEB7-3B51-4BE8-B264-BD04839142C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{0557DFE1-EACA-481C-BA51-D92639138AF6}"
 EndProject

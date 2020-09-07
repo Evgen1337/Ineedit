@@ -1,9 +1,6 @@
 ﻿using Ads.API.Application.ViewModels;
 using Ads.Domain.AggregatesModel.AdAggregate;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +27,7 @@ namespace Ads.API.Application.Commands
             var ad = await _adRepository.AddAsync(adToInsert);
             await _adRepository.UnitOfWork.SaveChangesAsync();
 
-            return new AdViewModel 
+            return new AdViewModel
             {
                 Name = ad.Name,
                 Id = ad.Id.Value,

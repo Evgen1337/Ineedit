@@ -1,6 +1,5 @@
 ﻿using Ads.API.Application.Exceptions;
 using Ads.API.Application.ViewModels;
-using Ads.Domain.AggregatesModel.AdAggregate;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System;

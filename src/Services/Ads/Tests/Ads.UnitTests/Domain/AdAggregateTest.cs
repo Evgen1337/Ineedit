@@ -1,7 +1,6 @@
 ﻿using Ads.Domain.AggregatesModel.AdAggregate;
 using Ads.Domain.Exceptions;
 using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Ads.UnitTests.Domain

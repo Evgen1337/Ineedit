@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{26
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{547BF1E3-614A-48E7-806B-3B89EB549B1C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ads.Domain", "Services\Ads\Ad.Domain\Ads.Domain.csproj", "{2098387F-1079-44B0-8837-A7F5A391D5EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ads.Domain", "Services\Ads\Ads.Domain\Ads.Domain.csproj", "{2098387F-1079-44B0-8837-A7F5A391D5EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ads.Infrastructure", "Services\Ads\Ads.Infrastructure\Ads.Infrastructure.csproj", "{C062E653-1198-49B4-9A6C-1246485ED747}"
 EndProject

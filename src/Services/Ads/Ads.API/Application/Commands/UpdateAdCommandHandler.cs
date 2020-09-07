@@ -2,10 +2,6 @@
 using Ads.API.Application.ViewModels;
 using Ads.Domain.AggregatesModel.AdAggregate;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +27,7 @@ namespace Ads.API.Application.Commands
                 throw new UserWithAdOwnerDoesntEqualsException("User not equals owner ad");
 
             ad.Name = request.UpdatingAdDto.Name;
-            ad.AdType =  AdType.FromValue<AdType>(request.UpdatingAdDto.TypeId);
+            ad.AdType = AdType.FromValue<AdType>(request.UpdatingAdDto.TypeId);
             ad.Comment = request.UpdatingAdDto.Comment;
 
             var updatedAd = _adRepository.Update(ad);
